@@ -2,11 +2,6 @@ const express = require('express');
 const app = express();
 let http = require('http');
 
-http.createServer((request, response) => {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Welcome to my movie list!');
-}).listen(8080);
-
 console.log('My first node test server is running on port 8080');
 
 let myLogger = (req, res, next) => {
@@ -50,22 +45,20 @@ let topMovies = [
 ]
 
 app.get('/movies', (req, res) => {
-    res.json('topMovies');
+    res.json(topMovies);
 });
 
 app.get('/', (req, res) => {
     res.send('Here are 10 great movies!');
 });
 
-app.listen(8080, () => {
-    console.log('My app is listening on port 8080');
-});
-
-app.use(express.static('/documentation.html'));
+app.use(express.static('public'));
 
 app.use((err, req, res, next)=>{
     console.error(err.stack);
     res.status(500).send('Something Broke!');
 });
 
-app.listen(8080);
+app.listen(8080, () => {
+    console.log('My app is listening on port 8080');
+});
