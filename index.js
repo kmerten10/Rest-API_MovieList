@@ -61,6 +61,11 @@ app.listen(8080, () => {
     console.log('My app is listening on port 8080');
 });
 
-app.listen(8080);
-
 app.use(express.static('/documentation.html'));
+
+app.use((err, req, res, next)=>{
+    console.error(err.stack);
+    res.status(500).send('Something Broke!');
+});
+
+app.listen(8080);
