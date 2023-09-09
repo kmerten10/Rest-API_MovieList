@@ -68,7 +68,7 @@ app.get('/director', (req, res) => {
     res.send('Successful Get request returning director information')
 });
 
-app.post('/userName', (req, res) => {
+app.post('/username', (req, res) => {
     res.send('Successful Post request creating new username')
 });
 
