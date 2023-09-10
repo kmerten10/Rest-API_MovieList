@@ -35,7 +35,7 @@ let topMovies = [
         title: "How to Lose a Guy in 10 Days"
     },
     {
-        title: "Garden State"
+        title: "Pulp Fiction"
     },
     {
         title: "Frozen"
