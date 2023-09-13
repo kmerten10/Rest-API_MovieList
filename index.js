@@ -9,21 +9,14 @@ const Models = require('./models.js');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
-const Genres = Models.Genres;
-const Directors = Models.Directors;
+const Genres = Models.Genre;
+const Directors = Models.Director;
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {useNewURLParser: true, useUnifiedTopology: true});
-
-// let http = require('http');
-
-// let myLogger = (req, res, next) => {
-//     console.log(req.url);
-//     next();
-// };
 
 app.get('/movies', async (req, res) => {
     await Movies.find()
@@ -71,10 +64,10 @@ app.get('/movies/genres/:Name', async (req,res)=> {
     });
 });
 
-app.get('/directors/:Name',  (req, res) => {
+app.get('/director/:Name',  (req, res) => {
     Directors.findOne({Name: req.params.Name})
-    .then((directors) => {
-        res.json(directors);
+    .then((director) => {
+        res.json(director);
     })
     .catch((err) => {
         console.error(err);
@@ -120,7 +113,7 @@ app.get('/users', async (req, res) => {
 });
 
 app.get('/users/:username', async (req, res)=> {
-    await Users.findOne({username: req.params.Username})
+    await Users.findOne({username: req.params.username})
     .then((user) => {
         res.json(user);
     })

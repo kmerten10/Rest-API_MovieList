@@ -4,9 +4,9 @@ let movieSchema = mongoose.Schema({
     Title: {type: String, required: true},
     Description: {type: String, required: true},
     Genre: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Genre'},
+        type: mongoose.Schema.Types.ObjectId, ref: 'Movies'},
     Director: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Director'},
+        type: mongoose.Schema.Types.ObjectId, ref: 'Movies'},
 });
 
 let userSchema = mongoose.Schema({
@@ -18,24 +18,7 @@ let userSchema = mongoose.Schema({
     FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}]
 });
 
-let directorSchema = mongoose.Schema({
-    Name: String,
-    Bio: String,
-})
-
-let genreSchema = mongoose.Schema ({
-    Name: String,
-    Desciprtion: String,
-})
-
-let Directors = mongoose.model('Users', directorSchema);
-let Genres = mongoose.model('Users', genreSchema)
-
-let Movies = mongoose.model('Movies', movieSchema);s
+let Movies = mongoose.model('Movies', movieSchema);
 let Users = mongoose.model('Users', userSchema);
-
-module.exports.Genres = Genres;
-module.exports.Directors = Directors;
 module.exports.Movies = Movies;
 module.exports.Users = Users;
-
