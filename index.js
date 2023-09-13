@@ -9,8 +9,8 @@ const Models = require('./models.js');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
-const Genres = Models.Genre;
-const Directors = Models.Director;
+const Genres = Models.Genres;
+const Directors = Models.Directors;
 
 
 app.use(bodyParser.json());
@@ -42,7 +42,7 @@ app.get('/movies/:Title', async (req,res)=> {
 
 app.get('/movies/:Genre', async (req,res)=> {
     await Genres.find()
-    .then((movies) => {
+    .then((genre) => {
         res.json(genre);
     })
     .catch((err) => {
