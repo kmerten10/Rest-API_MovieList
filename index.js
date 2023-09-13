@@ -47,6 +47,8 @@ app.get('/movies/:Title', async (req,res)=> {
     });
 });
 
+//Queries below are not working. I tried trouble shooting by updating plurals and adding and removing "movies" from the path
+
 app.get('/movies/genre/:Name', async (req,res)=> {
     await Genres.findOne({Name: req.params.Name})
     .then((genre) => {
