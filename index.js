@@ -47,9 +47,9 @@ app.get('/movies/:Title', async (req,res)=> {
     });
 });
 
-app.get('/movies/genres', async (req,res)=> {
+app.get('/movies/:Genre', async (req,res)=> {
     await Genres.find()
-    .then((genre) => {
+    .then((movies) => {
         res.json(genre);
     })
     .catch((err) => {

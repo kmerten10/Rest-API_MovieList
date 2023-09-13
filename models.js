@@ -28,8 +28,8 @@ let genreSchema = mongoose.Schema ({
     Desciprtion: String,
 })
 
-let Directors = mongoose.model('Movies', directorSchema);
-let Genres = mongoose.model('Movies', genreSchema)
+let Directors = mongoose.model('Users', directorSchema);
+let Genres = mongoose.model('Users', genreSchema)
 
 let Movies = mongoose.model('Movies', movieSchema);s
 let Users = mongoose.model('Users', userSchema);
