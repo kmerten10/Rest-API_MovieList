@@ -37,8 +37,8 @@ app.get('/movies/:Title', async (req, res) => {
         });
 });
 
-app.get('/movies/genre/:Name', async (req, res) => {
-    await Movies.find({ 'Genre.Name': req.params.Name })
+app.get('/movies/genre/:genreName', (req, res) => {
+    Movies.findOne({ 'Genre.Name': req.params.genreName })
         .then((Movies) => {
             res.json(Movies);
         })
@@ -103,8 +103,8 @@ app.put('/users/:Username', async (req, res) => {
         })
 });
 
-app.post('/users', async (req, res) => {
-    await Users.findOne({ Username: req.body.Username })
+app.post('/users', (req, res) => {
+    Users.findOne({ username: req.body.username })
         .then((user) => {
             if (user) {
                 return res.status(400).send(req.body.Username + 'already exists')
