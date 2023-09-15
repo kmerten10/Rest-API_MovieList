@@ -82,15 +82,15 @@ app.get('/users/:username', async (req, res) => {
 });
 
 
-app.put('/users/:Username', async (req, res) => {
-    await Users.findOneAndUpdate({ Username: req.params.Username },
+app.put('/users/:username', async (req, res) => {
+    await Users.findOneAndUpdate({ username: req.params.username },
         {
             $set:
             {
-                Username: req.body.Username,
-                Password: req.body.Password,
-                Email: req.body.Email,
-                Birthday: req.body.Birthday
+                username: req.body.username,
+                password: req.body.password,
+                email: req.body.email,
+                birth_date: req.body.birth_date
             }
         },
         { new: true })
@@ -128,8 +128,8 @@ app.post('/users', (req, res) => {
         });
 });
 
-app.post('/users/:Username/movies/:MovieID', async (req, res) => {
-    await Users.findOneAndUpdate({ Username: req.params.Username }, {
+app.post('/users/:username/movies/:MovieID', async (req, res) => {
+    await Users.findOneAndUpdate({ username: req.params.username }, {
         $push: { favoriteMovies: req.params.MovieID }
     },
         { new: true })
@@ -142,10 +142,10 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
         });
 });
 
-app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
-    await Users.findOneAndUpdate({ Username: req.params.Username },
+app.delete('/users/:username/movies/:MovieID', async (req, res) => {
+    await Users.findOneAndUpdate({ username: req.params.username },
         {
-            $pull: { FavoriteMovies: req.params.MovieID },
+            $pull: { favoriteMovies: req.params.MovieID },
         },
         { new: true }
     )
@@ -158,13 +158,13 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
         });
 });
 
-app.delete('/users/:Username', async (req, res) => {
-    await Users.findOneAndRemove({ Username: req.params.Username })
+app.delete('/users/:username', async (req, res) => {
+    await Users.findOneAndRemove({ username: req.params.username })
         .then((user) => {
             if (!user) {
-                res.status(400).send(req.params.Username + ' was not found');
+                res.status(400).send(req.params.username + ' was not found');
             } else {
-                res.status(200).send(req.params.Username + ' was deleted.');
+                res.status(200).send(req.params.username + ' was deleted.');
             }
         })
         .catch((err) => {
