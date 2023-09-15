@@ -82,7 +82,7 @@ app.get('/users/:username', async (req, res) => {
 });
 
 
-app.put('/users', async (req, res) => {
+app.put('/users/:Username', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username },
         {
             $set:
@@ -143,14 +143,15 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
         });
 });
 
-app.delete('/favoriteMovies', async (req, res) => {
-    await Users.findOneAndRemove({ favoriteMovies: req.params.favoriteMovies })
-        .then((user) => {
-            if (!user) {
-                res.status(400).send(req.params.favoriteMovies + ' was not found');
-            } else {
-                res.status(200).send(req.params.favoriteMovies + ' was deleted.');
-            }
+app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.Username },
+        {
+            $pull: { FavoriteMovies: req.params.MovieID },
+        },
+        { new: true }
+    )
+        .then((updatedUser) => {
+            res.status(201).json(updatedUser);
         })
         .catch((err) => {
             console.error(err);
