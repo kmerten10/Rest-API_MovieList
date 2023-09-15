@@ -1,11 +1,11 @@
 const express = require('express');
-bodyParser = require('body-parser');
 
 
 const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const bodyParser = require('body-parser');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
@@ -13,9 +13,14 @@ const Users = Models.Users;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let auth = require('./auth') (app);
+
+const passport = require('passport');
+    require('./passport');
+
 mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { useNewURLParser: true, useUnifiedTopology: true });
 
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate('jwt',{session: false}), async (req, res) => {
     await Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
