@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const bodyParser = require('body-parser');
+const {check, validationResult} = require('express-validator');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
@@ -88,7 +89,16 @@ app.get('/users/:username', passport.authenticate('jwt', {session: false}), asyn
 });
 
 
-app.put('/users/:username', passport.authenticate('jwt', {session: false}), async (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', {session: false}), [
+    check('Username', 'Username is required').isLength({min:5}),
+    check('Username', 'Username contains non alphanumberic characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+    ], async (req, res) => {
+        let errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(422).json({errors: errors.array()});
+        }
     await Users.findOneAndUpdate({ username: req.params.username },
         {
             $set:
@@ -109,7 +119,17 @@ app.put('/users/:username', passport.authenticate('jwt', {session: false}), asyn
         })
 });
 
-app.post('/users', async (req, res) => {
+app.post('/users', [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+    ], async (req, res) => {
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()});
+        }
+
     let hashedPassword = Users.hashPassword(req.body.password);
     await Users.findOne({ username: req.body.username })
         .then((user) => {
@@ -180,6 +200,7 @@ app.delete('/users/:username', passport.authenticate('jwt', {session: false}), a
         });
 });
 
-app.listen(8084, () => {
-    console.log('My app is listening on port 8084');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', ()=> {
+    console.log('Listening on Port ' = port);
 });
