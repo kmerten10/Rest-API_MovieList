@@ -12,6 +12,8 @@ const Users = Models.Users;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+app.use(cors());
 let auth = require('./auth') (app);
 
 const passport = require('passport');
@@ -107,15 +109,16 @@ app.put('/users/:username', passport.authenticate('jwt', {session: false}), asyn
         })
 });
 
-app.post('/users', (req, res) => {
-    Users.findOne({ username: req.body.username })
+app.post('/users', async (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.password);
+    await Users.findOne({ username: req.body.username })
         .then((user) => {
             if (user) {
                 return res.status(400).send(req.body.Username + 'already exists')
             } else {
                 Users.create({
                         username: req.body.username,
-                        password: req.body.password,
+                        password: hashedPassword,
                         email: req.body.email,
                         birth_date: req.body.birth_date,
                     })
