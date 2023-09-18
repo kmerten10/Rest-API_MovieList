@@ -11,7 +11,7 @@ let generateJWTToken = (user) => {
         expiresIn: '7d',
         algorithm: 'HS256'
     });
-}
+};
 
 module.exports = (router) => {
     router.post('/login', (req,res) => {
