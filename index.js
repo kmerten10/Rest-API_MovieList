@@ -21,7 +21,7 @@ const passport = require('passport');
     require('./passport');
 
 // mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { useNewURLParser: true, useUnifiedTopology: true });
-// mongoose.connect('process.env.CONNECTION_URI, { useNewURLParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb+srv://kelseymerten:Oll13dog@cluster0.xag6grs.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewURLParser: true, useUnifiedTopology: true });
 
 app.get('/', (req, res) => {
     res.send('Welcome to MyFlix!');
