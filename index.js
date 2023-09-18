@@ -5,13 +5,11 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Models = require('./models.js');
-
 const bodyParser = require('body-parser');
 const {check, validationResult} = require('express-validator');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
-const generateJWTToken = Auth.generateJWTToken;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -162,10 +160,7 @@ app.post('/users', [
                         email: req.body.email,
                         birth_date: req.body.birth_date,
                     })
-                    .then((user) => { 
-                        let token = generateJWTToken(user.toJSON());
-                        return res.json({user, token});
-                     })
+                    .then((user) => { res.status(201).json(user); })
                     .catch((error) => {
                         console.error(error);
                         res.status(500).send('Error: ' + error);
