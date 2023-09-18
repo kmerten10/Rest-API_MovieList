@@ -12,6 +12,7 @@ let generateJWTToken = (user) => {
         algorithm: 'HS256'
     });
 };
+module.exports = generateJWTToken;
 
 module.exports = (router) => {
     router.post('/login', (req,res) => {
