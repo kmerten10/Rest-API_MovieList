@@ -12,9 +12,9 @@ let generateJWTToken = (user) => {
         algorithm: 'HS256'
     });
 };
-module.exports = generateJWTToken;
 
-module.exports = (router) => {
+module.exports.generateJWTToken = generateJWTToken;
+module.exports.router = (router) => {
     router.post('/login', (req,res) => {
         passport.authenticate('local', { session: false }, (error, user, info) => {
             if (error || !user) {
