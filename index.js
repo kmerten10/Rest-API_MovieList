@@ -23,6 +23,21 @@ const passport = require('passport');
 // mongoose.connect('mongodb://127.0.0.1:27017/cfDB', { useNewURLParser: true, useUnifiedTopology: true });
 // mongoose.connect('mongodb+srv://kelseymerten:Oll13dog@cluster0.xag6grs.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewURLParser: true, useUnifiedTopology: true });
 
+app.get('/', (req, res) => {
+    res.send('Welcome to MyFlix!');
+  });
+  
+
+app.get('/', passport.authenticate('jwt',{session: false}), async (req, res) => {
+    await Movies.find()
+        .then((movies) => {
+            res.status(201).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
 app.get('/movies', passport.authenticate('jwt',{session: false}), async (req, res) => {
     await Movies.find()
