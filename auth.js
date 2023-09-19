@@ -9,7 +9,7 @@ let generateJWTToken = (user) => {
     return jwt.sign(user, jwtSecret, {
         subject: user.username,
         expiresIn: '7d',
-        algorithm: 'HS256'
+        algorithm: 'HS256',
     });
 };
 
@@ -31,4 +31,4 @@ module.exports = (router) => {
             });
         })(req, res);
     });
-}
+};
