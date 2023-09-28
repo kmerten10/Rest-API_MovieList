@@ -26,7 +26,7 @@ require('./passport');
 mongoose.connect(process.env.CONNECTION_URI, { useNewURLParser: true, useUnifiedTopology: true });
 
 app.get('/', (req, res) => {
-    res.send('Welcome to MyFlix!');
+    res.send({ Message: 'Welcome to MyFlix!' });
 });
 
 
